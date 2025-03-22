@@ -9,7 +9,7 @@ interface SearchResult {
   description?: string;
   imageUrl?: string;
   url?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface ResultCardProps {

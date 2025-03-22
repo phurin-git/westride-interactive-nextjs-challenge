@@ -14,7 +14,7 @@ interface SearchResult {
   description?: string;
   imageUrl?: string;
   url?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export default function SearchPage() {
@@ -40,13 +40,15 @@ export default function SearchPage() {
       });
 
       if (response.data.Response === "True") {
-        const formattedResults = response.data.Search.map((item: any) => ({
-          id: item.imdbID,
-          title: item.Title,
-          description: `${item.Year} • ${item.Type}`,
-          imageUrl: item.Poster !== "N/A" ? item.Poster : "/placeholder.png",
-          url: `https://www.imdb.com/title/${item.imdbID}`,
-        }));
+        const formattedResults = response.data.Search.map(
+          (item: SearchResult) => ({
+            id: item.imdbID,
+            title: item.Title,
+            description: `${item.Year} • ${item.Type}`,
+            imageUrl: item.Poster !== "N/A" ? item.Poster : "/placeholder.png",
+            url: `https://www.imdb.com/title/${item.imdbID}`,
+          }),
+        );
 
         setResults(formattedResults);
         dispatch({ type: "ADD_SEARCH", payload: searchQuery });
